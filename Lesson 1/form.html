@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+			function validateForm(event) {
+			   	var photo = document.forms["myForm"]["photo"].files[0].size
+			   	var photoname = document.forms["myForm"]["photo"].value.endsWith(".jpg")
+			   	var isWork = true;	
+					
+				if (photo > 1024*1024){
+					isWork = false;
+					alert("Размер фото превышает 1 Мб");
+        		}
+				
+				if(!photoname){
+					isWork = false;
+					alert("Фотография должна быть в формате jpg");
+        			
+				}
+				if(!isWork){
+					event.preventDefault();
+				}	
+			}				
+</script>
+</head>
+<form name="Form" action="/action_page.php" method="post">
+<body>
+  Заполните форму (все поля  обязательны)<p>
+  Имя:<br>
+  	<input type="text" name="firstname" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
+    <br><p>
+  Пол:<br>
+  	<input type="radio" name="sex" value="man">мужской
+  	<input type="radio" name="sex" value="woman">женский
+    <br><p>
+  Номер зачетной книжки:<br>
+  	<input type="text" name="book" pattern="[0-9]{12}" maxlength="12" required>
+    <br><p>
+  Дата рождения:<br>
+  	<input type="date" name="date" required>
+    <br><p>
+  Фотография:<br>
+  	<input type="file" name="photo" required>
+    <br><p>
+  Пароль:<br>
+  	<input type="password" name="password" minsize="8" required>
+    <br><p>
+  <input type="reset" name="reset" value="Очистить">
+  <input type="submit" name="button" value="Отправить">
+</body>
+</form> 
+</html>
