@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
 <script type="text/javascript">
-			function validateForm(event) {
-			   	var photo = document.forms["myForm"]["photo"].files[0].size
-			   	var photoname = document.forms["myForm"]["photo"].value.endsWith(".jpg")
-			   	var isWork = true;	
+			function validateForm() {
+			   	var error = "";
+				var input = document.forms["Form"]["photo"];
 					
-				if (photo > 1024*1024){
-					isWork = false;
-					alert("Размер фото превышает 1 Мб");
-        		}
-				
-				if(!photoname){
-					isWork = false;
-					alert("Фотография должна быть в формате jpg");
-        			
+				if (input.files[0].size > 1038336) {
+					error += "Изображение превышает 1 Мб\n";
 				}
-				if(!isWork){
-					event.preventDefault();
-				}	
-			}				
+				if (error != "") {
+					alert(error);
+					return false;
+				} 
+				else {
+					loadDoc();
+					return true;
+				}
+			}	
+			function loadDoc() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						alert("Данные загружены")
+				} else {
+						alert("Данные не загружены")
+	   }
+    };
+    xhttp.send(document.forms["Form"].data); 
+}
 </script>
-</head>
-<form name="Form" action="/action_page.php" method="post">
+<form name="Form" onsubmit="return validateForm()" method="post">
 <body>
   Заполните форму (все поля  обязательны)<p>
   Имя:<br>
@@ -40,7 +46,7 @@
   	<input type="date" name="date" required>
     <br><p>
   Фотография:<br>
-  	<input type="file" name="photo" required>
+  	<input type="file" accept="image/jpeg" name="photo" required>
     <br><p>
   Пароль:<br>
   	<input type="password" name="password" minsize="8" required>
